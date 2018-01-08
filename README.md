@@ -18,7 +18,10 @@ If input = [94133,94133] [94200,94299] [94226,94399]<BR>
 Output should be = [94133,94133] [94200,94399]
 
 ## Solution
-The solution to this problem can be broken down into the following components:
-- ZipCodeTracker - This component keeps track of all zipcodes by using a 100000 size boolean array.  An array was chosen for implementation because the max zipcode for this problem is 99999 and thus O[n] complexity would still be relatively fast.  For every range: [start,end], ZipCodeTracker iterates from start to end marking each zipcode within the array.
+The solution was written in Eclipse as a MAVEN project.  This solution can be broken down into the following components:
+- ZipCodeTracker - This component keeps track of all zipcodes by using a 100000 size boolean array.  An array was chosen for implementation because the max zipcode for this problem is 99999 and thus O[n] time-complexity would still be relatively fast.  For every range: [start,end], ZipCodeTracker iterates from start to end marking each zipcode within the array.  If the problem-statement were to be changed to include 9-digit zip codes then I would consider a different implementation.
 - Parser - This component converts serialized strings into integer components for use by the ZipCodeTracker.  All of the validation for the input string is done in this class.  Zipcodes must be 5 digits and must equate to values in range [00001,99999].  The input format described by the Problem Statement must also be strictly followed.    
-- ParserException - This exception was written to represent any validation errors found by the Parser.
+- ZipCodeException - This exception was written to represent any validation errors found by the Parser or ZipCodeTracker.
+
+### Unit Tests
+I included multiple unit-tests for ZipCodeTracker, Parser, as well as for the "Main" Solution class.
