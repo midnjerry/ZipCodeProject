@@ -1,5 +1,7 @@
 package jerry.balderas;
 
+import java.util.Arrays;
+
 import jerry.balderas.zipcode.ZipCodeTracker;
 import jerry.balderas.zipcode.parser.ZipCodeException;
 
@@ -25,12 +27,9 @@ public class Solution {
 	}
 
 	private static String concatenateToOneString(String[] args) {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < args.length; i++) {
-			builder.append(args[i] + " ");
-		}
-		return builder.toString().trim();
+		return String.join(" ",Arrays.asList(args));
 	}
+		
 
 	public static String consolidateRanges(String input) {
 		ZipCodeTracker tracker = new ZipCodeTracker();

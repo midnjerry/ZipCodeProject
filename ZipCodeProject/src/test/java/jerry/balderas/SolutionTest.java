@@ -37,4 +37,9 @@ public class SolutionTest {
 	public void worstCaseScenario() {
 		assertEquals("[00001,99999]", Solution.consolidateRanges(getAtomizedZipCodeInput(1, 99999)));
 	}
+
+	@Test
+	public void testMain() {
+		Solution.main(new String[] { "[10000,12000]", "[13000,14000]", "[13090,14000]" });
+	}
 }

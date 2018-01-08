@@ -7,7 +7,6 @@ public class ZipCodeTracker {
 	public final static int MIN_ZIPCODE = 1;
 	public final static int MAX_ZIPCODE = 99999;
 	boolean[] isMarked = new boolean[MAX_ZIPCODE + 1];
-	private Parser parser = new Parser();
 
 	public void markZipCodes(int start, int end) {
 		validateZipCode(start);
@@ -19,6 +18,7 @@ public class ZipCodeTracker {
 	}
 
 	public void markZipCodes(String serializedInput) {
+		Parser parser = new Parser();
 		int[] minMaxValuesForRanges = parser.deSerializeRanges(serializedInput);
 		for (int i = 0; i < minMaxValuesForRanges.length; i += 2) {
 			markZipCodes(minMaxValuesForRanges[i], minMaxValuesForRanges[i + 1]);
