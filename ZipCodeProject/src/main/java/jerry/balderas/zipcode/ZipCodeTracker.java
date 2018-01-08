@@ -19,7 +19,7 @@ public class ZipCodeTracker {
 	}
 
 	public void markZipCodes(String serializedInput) {
-		Integer[] minMaxValuesForRanges = parser.parseZipCodeRanges(serializedInput);
+		int[] minMaxValuesForRanges = parser.deSerializeRanges(serializedInput);
 		for (int i = 0; i < minMaxValuesForRanges.length; i += 2) {
 			markZipCodes(minMaxValuesForRanges[i], minMaxValuesForRanges[i + 1]);
 		}

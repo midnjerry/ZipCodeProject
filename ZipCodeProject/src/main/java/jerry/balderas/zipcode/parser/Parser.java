@@ -1,31 +1,41 @@
 package jerry.balderas.zipcode.parser;
 
-import java.util.ArrayList;
-
 public class Parser {
 
-	public Integer[] parseZipCodeRanges(String input) {
-		validateInputNotNull(input);
-		ArrayList<Integer> resultList = new ArrayList<Integer>();
+	public int[] deSerializeRanges(String input) {
+		validateNotNull(input);
 		String[] ranges = removeSpaces(input);
-		for (String range : ranges) {
-			validateRangeNotNull(range, input);
-			resultList.addAll(parseRange(range));
-		}
-		return resultList.toArray(new Integer[resultList.size()]);
+		return convertToIntegerBoundaryPoints(ranges);
 	}
 
-	public void validateInputNotNull(String input) {
+	private int[] convertToIntegerBoundaryPoints(String[] ranges) {
+		int[] rangeBoundaryPoints = new int[ranges.length * 2];
+		for (int i = 0; i < ranges.length; i++) {
+			int[] minMax = parseRange(ranges[i]);
+			rangeBoundaryPoints[i * 2] = minMax[0];
+			rangeBoundaryPoints[i * 2 + 1] = minMax[1];
+		}
+		return rangeBoundaryPoints;
+	}
+
+	private int[] parseRange(String range) {
+		validateRangeNotNull(range);
+		String trimmedInput = removeBrackets(range);
+		String[] minMaxPair = removeCommaDelimiter(trimmedInput);
+		return parseIntegers(minMaxPair);
+	}
+
+	private void validateNotNull(String input) {
 		if (input == null || input.length() == 0) {
 			throw new ZipCodeException(
 					"Usage: java -jar ZipCode.jar [<5-digit zipcode>,<5-digit zipcode>] [<5-digit zipcode>,<5-digit zipcode>] ...");
 		}
 	}
 
-	private void validateRangeNotNull(String range, String input) {
+	private void validateRangeNotNull(String range) {
 		if (range == null || range.length() == 0) {
 			throw new ZipCodeException(String
-					.format("Parsing error: You must delimit ranges with only one space, text with error: %s", input));
+					.format("Parsing error: You must delimit ranges with only one space"));
 		}
 	}
 
@@ -33,17 +43,13 @@ public class Parser {
 		return input.split(" ");
 	}
 
-	private ArrayList<Integer> parseRange(String range) {
-		String trimmedInput = removeBrackets(range);
-		String[] minMaxPair = removeCommaDelimiter(trimmedInput);
-		return parseIntegers(minMaxPair);
-	}
 
-	private ArrayList<Integer> parseIntegers(String[] zipcodes) {
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		result.add(parseInteger(zipcodes[0]));
-		result.add(parseInteger(zipcodes[1]));
-		return result;
+
+	private int[] parseIntegers(String[] zipcodes) {
+		int[] minMaxPair = new int[2];
+		minMaxPair[0] = parseInteger(zipcodes[0]);
+		minMaxPair[1] = parseInteger(zipcodes[1]);
+		return minMaxPair;
 	}
 
 	private int parseInteger(String fiveDigitInput) {
