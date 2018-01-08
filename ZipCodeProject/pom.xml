@@ -39,15 +39,7 @@
 				<version>${mavenCompilerPlugin.version}</version>
 				<configuration>
 					<source>${javacompiler.version}</source>
-					<target>${javacompiler.version}</target>
-					<finalName>ZipCode</finalName>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>jerry.balderas.Solution</mainClass>
-						</manifest>
-					</archive>
+					<target>${javacompiler.version}</target>										
 				</configuration>
 			</plugin>
 			<plugin>
@@ -64,6 +56,24 @@
 							<outputDirectory>
 								${project.build.directory}/libs
 							</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>install-jar</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>jerry.balderas</groupId>
+									<artifactId>ZipCodeProject</artifactId>
+									<version>1.0</version>									
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${basedir}/download</outputDirectory>
+							<stripVersion>true</stripVersion>
 						</configuration>
 					</execution>
 				</executions>
