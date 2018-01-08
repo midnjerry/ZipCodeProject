@@ -27,6 +27,11 @@ public class Solution {
 	}
 
 	private static String concatenateToOneString(String[] args) {
+		if (args == null || args.length == 0) {
+			throw new ZipCodeException(
+					"Usage: java -jar ZipCodeProject.jar [<5-digit zipcode>,<5-digit zipcode>] [<5-digit zipcode>,<5-digit zipcode>] ...");
+		}
+
 		return String.join(" ",Arrays.asList(args));
 	}
 		

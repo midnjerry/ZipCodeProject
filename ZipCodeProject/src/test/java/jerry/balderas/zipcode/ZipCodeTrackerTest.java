@@ -34,6 +34,8 @@ public class ZipCodeTrackerTest {
 
 	@Test
 	public void testMinimization() {
+		assertRanges("");
+		assertRanges("", new int[0]);
 		assertRanges("[10000,12000]", 10000, 12000);
 		assertRanges("[00001,00001]", 1, 1);
 		assertRanges("[00001,00001]", 1, 1, 1, 1);

@@ -42,4 +42,9 @@ public class SolutionTest {
 	public void testMain() {
 		Solution.main(new String[] { "[10000,12000]", "[13000,14000]", "[13090,14000]" });
 	}
+
+	@Test
+	public void callingEmptyMain_OutputsUsageMessage() {
+		Solution.main(new String[] {});
+	}
 }

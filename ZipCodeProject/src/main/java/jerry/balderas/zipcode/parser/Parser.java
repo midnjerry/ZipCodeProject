@@ -3,7 +3,9 @@ package jerry.balderas.zipcode.parser;
 public class Parser {
 
 	public int[] deSerializeRanges(String input) {
-		validateNotNull(input);
+		if (isNullOrEmpty(input)) {
+			return new int[0];
+		}
 		String[] ranges = removeSpaces(input);
 		return convertToIntegerBoundaryPoints(ranges);
 	}
@@ -25,11 +27,8 @@ public class Parser {
 		return parseIntegers(minMaxPair);
 	}
 
-	private void validateNotNull(String input) {
-		if (input == null || input.length() == 0) {
-			throw new ZipCodeException(
-					"Usage: java -jar ZipCode.jar [<5-digit zipcode>,<5-digit zipcode>] [<5-digit zipcode>,<5-digit zipcode>] ...");
-		}
+	private boolean isNullOrEmpty(String input) {
+		return (input == null || input.length() == 0);
 	}
 
 	private void validateRangeNotNull(String range) {

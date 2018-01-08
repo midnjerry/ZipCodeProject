@@ -21,6 +21,7 @@ public class ParserTest {
 		assertArrayEquals(new int[] { 1, 5 }, parser.deSerializeRanges("[00001,00005]"));
 		assertArrayEquals(new int[] { 1, 6, 8, 10 }, parser.deSerializeRanges("[00001,00006] [00008,00010]"));
 		assertArrayEquals(new int[] { 25, 25, 25, 25 }, parser.deSerializeRanges("[00025,00025] [00025,00025]"));
+		assertArrayEquals(new int[] {}, parser.deSerializeRanges(""));
 	}
 
 	@Test(expected = ZipCodeException.class)
@@ -72,10 +73,4 @@ public class ParserTest {
 	public void alphanumericValue_ThrowsException() {
 		parser.deSerializeRanges("[12345,1234e]");
 	}
-
-	@Test(expected = ZipCodeException.class)
-	public void inputIsNull_ThrowsException() {
-		parser.deSerializeRanges("");
-	}
-
 }
