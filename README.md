@@ -25,3 +25,11 @@ The solution was written in Eclipse as a MAVEN project.  This solution can be br
 
 ### Unit Tests
 I included multiple unit-tests for ZipCodeTracker, Parser, as well as for the "Main" Solution class.
+
+### Installation
+There are two ways to install.
+1. Download the jar from [https://github.com/midnjerry/ZipCodeProject/blob/master/ZipCodeProject.jar](https://github.com/midnjerry/ZipCodeProject/blob/master/ZipCodeProject.jar)
+2. Import the project into Eclipse as Maven Project and Run As Maven Build.  The jar will be placed in the project /target directory.
+
+### Usage
+java -jar ZipCodeProject.jar [<5-digit zipcode>,<5-digit zipcode>] [<5-digit zipcode>,<5-digit zipcode>] ...
