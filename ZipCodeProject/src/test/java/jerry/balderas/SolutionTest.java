@@ -16,22 +16,25 @@ public class SolutionTest {
 
 	@Test
 	public void testSimplification() {
-		assertEquals("[10000,12000]", Solution.getUnionOfZipCodeRanges("[10000,12000]"));
-		assertEquals("[00001,00001]", Solution.getUnionOfZipCodeRanges("[00001,00001]"));
-		assertEquals("[00001,00001]", Solution.getUnionOfZipCodeRanges("[00001,00001] [00001,00001]"));
-		assertEquals("[10000,12000]", Solution.getUnionOfZipCodeRanges("[10000,10999] [11000,12000]"));
-		assertEquals("[10000,10000] [10002,10003]", Solution.getUnionOfZipCodeRanges("[10000,10000] [10002,10003]"));
-		assertEquals("[10000,12000]", Solution.getUnionOfZipCodeRanges("[10000,11500] [10500,12000]"));
-		assertEquals("[10000,12000]", Solution.getUnionOfZipCodeRanges("[10500,12000] [10000,11500]"));
-		assertEquals("[10000,12000]", Solution.getUnionOfZipCodeRanges(getAtomizedZipCodeInput(10000, 12000)));
+		assertEquals("[10000,12000]", Solution.consolidateRanges("[10000,12000]"));
+		assertEquals("[00001,00001]", Solution.consolidateRanges("[00001,00001]"));
+		assertEquals("[00001,00001]", Solution.consolidateRanges("[00001,00001] [00001,00001]"));
+		assertEquals("[10000,12000]", Solution.consolidateRanges("[10000,10999] [11000,12000]"));
+		assertEquals("[10000,10000] [10002,10003]", Solution.consolidateRanges("[10000,10000] [10002,10003]"));
+		assertEquals("[10000,12000]", Solution.consolidateRanges("[10000,11500] [10500,12000]"));
+		assertEquals("[10000,12000]", Solution.consolidateRanges("[10500,12000] [10000,11500]"));
+		assertEquals("[10000,12000]", Solution.consolidateRanges(getAtomizedZipCodeInput(10000, 12000)));
+		assertEquals("[10000,12000] [99998,99999]",
+				Solution.consolidateRanges("[10000,12000] [99998,99998] [99999,99999]"));
 		String expected = "[10000,12000] [13000,14000]";
-		assertEquals(expected, Solution.getUnionOfZipCodeRanges("[10000,12000] [13000,14000]"));
-		assertEquals(expected, Solution.getUnionOfZipCodeRanges("[10000,12000] [13000,14000] [13090,14000]"));
-		assertEquals(expected, Solution.getUnionOfZipCodeRanges("[13090,14000] [10000,12000] [13000,14000]"));
+		assertEquals(expected, Solution.consolidateRanges("[10000,12000] [13000,14000]"));
+		assertEquals(expected, Solution.consolidateRanges("[10000,12000] [13000,14000] [13090,14000]"));
+		assertEquals(expected, Solution.consolidateRanges("[13090,14000] [10000,12000] [13000,14000]"));
+
 	}
 
 	@Test
 	public void worstCaseScenario() {
-		assertEquals("[00001,99999]", Solution.getUnionOfZipCodeRanges(getAtomizedZipCodeInput(1, 99999)));
+		assertEquals("[00001,99999]", Solution.consolidateRanges(getAtomizedZipCodeInput(1, 99999)));
 	}
 }

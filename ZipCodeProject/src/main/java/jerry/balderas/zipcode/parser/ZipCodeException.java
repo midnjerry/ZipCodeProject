@@ -1,7 +1,7 @@
 package jerry.balderas.zipcode.parser;
 
-public class ParserException extends RuntimeException {
-	public ParserException(String errorMessage) {
+public class ZipCodeException extends RuntimeException {
+	public ZipCodeException(String errorMessage) {
 		super(errorMessage);
 	}
 

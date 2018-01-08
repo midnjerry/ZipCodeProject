@@ -1,23 +1,27 @@
 package jerry.balderas.zipcode;
 
 import jerry.balderas.zipcode.parser.Parser;
+import jerry.balderas.zipcode.parser.ZipCodeException;
 
 public class ZipCodeTracker {
 	public final static int MIN_ZIPCODE = 1;
 	public final static int MAX_ZIPCODE = 99999;
 	boolean[] isMarked = new boolean[MAX_ZIPCODE + 1];
+	private Parser parser = new Parser();
 
-	private void markZipCodes(int start, int end) {
+	public void markZipCodes(int start, int end) {
+		validateZipCode(start);
+		validateZipCode(end);
+		validateInCorrectOrder(start, end);
 		for (int zip = start; zip <= end; zip++) {
 			isMarked[zip] = true;
 		}
 	}
 
 	public void markZipCodes(String serializedInput) {
-		Parser parser = new Parser();
-		Integer[] ranges = parser.parseZipCodeRanges(serializedInput);
-		for (int i = 0; i < ranges.length; i += 2) {
-			markZipCodes(ranges[i], ranges[i + 1]);
+		Integer[] minMaxValuesForRanges = parser.parseZipCodeRanges(serializedInput);
+		for (int i = 0; i < minMaxValuesForRanges.length; i += 2) {
+			markZipCodes(minMaxValuesForRanges[i], minMaxValuesForRanges[i + 1]);
 		}
 	}
 
@@ -32,13 +36,31 @@ public class ZipCodeTracker {
 				start = zipcode;
 			} else if (!isMarked[zipcode] && isStreak) {
 				isStreak = false;
-				builder.append(String.format("[%05d,%05d] ", start, zipcode - 1));
+				builder.append(serializeRange(start, zipcode - 1) + " ");
 			}
 		}
 		if (isStreak) {
-			builder.append(String.format("[%05d,%05d] ", start, end));
+			builder.append(serializeRange(start, end));
 		}
 		return builder.toString().trim();
+	}
+
+	private String serializeRange(int start, int end) {
+		return String.format("[%05d,%05d]", start, end);
+	}
+
+	private void validateInCorrectOrder(int start, int end) {
+		if (start > end) {
+			throw new ZipCodeException(String
+					.format("ZipCode error: [%d,%d] - first value cannot be larger than second value", start, end));
+		}
+	}
+
+	private void validateZipCode(int zipcode) {
+		if (zipcode < MIN_ZIPCODE || zipcode > MAX_ZIPCODE) {
+			throw new ZipCodeException(
+					String.format("ZipCode error: %d must be >= %d and <= %d", zipcode, MIN_ZIPCODE, MAX_ZIPCODE));
+		}
 	}
 
 }
