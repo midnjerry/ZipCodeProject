@@ -8,6 +8,14 @@ public class ZipCodeTracker {
 	public final static int MAX_ZIPCODE = 99999;
 	boolean[] isMarked = new boolean[MAX_ZIPCODE + 1];
 
+	/**
+	 * Registers all zip codes that fall between start and end.
+	 *
+	 * @param start
+	 *            - The minimum value of the zipcode range
+	 * @param end
+	 *            - The maximum value of the zipcode range
+	 */
 	public void markZipCodes(int start, int end) {
 		validateZipCode(start);
 		validateZipCode(end);
@@ -17,6 +25,13 @@ public class ZipCodeTracker {
 		}
 	}
 
+	/**
+	 * Registers all zip codes represented by ranges in input.
+	 *
+	 * @param serializedInput
+	 *            - Accepts multiple integer ranges delimited by a " ". Example:
+	 *            "[min1,max1] [min2,max2] ... [minN,maxN]"
+	 */
 	public void markZipCodes(String serializedInput) {
 		Parser parser = new Parser();
 		int[] minMaxValuesForRanges = parser.deSerializeRanges(serializedInput);
@@ -25,6 +40,10 @@ public class ZipCodeTracker {
 		}
 	}
 
+	/**
+	 * Reads all ZipCode ranges in memory and creates a represenation of those
+	 * ranges in String format.
+	 */
 	public String serializeZipCodeRanges() {
 		StringBuilder builder = new StringBuilder();
 		int start = MIN_ZIPCODE;
@@ -45,10 +64,26 @@ public class ZipCodeTracker {
 		return builder.toString().trim();
 	}
 
+	/**
+	 * Represents a zipcode range in String format
+	 * 
+	 * @param start
+	 *            - The minimum value of the zipcode range
+	 * @param end
+	 *            - The maximum value of the zipcode range
+	 */
 	private String serializeRange(int start, int end) {
 		return String.format("[%05d,%05d]", start, end);
 	}
 
+	/**
+	 * Validates that zipcode range is in correct order.
+	 * 
+	 * @param start
+	 *            - The minimum value of the zipcode range
+	 * @param end
+	 *            - The maximum value of the zipcode range
+	 */
 	private void validateInCorrectOrder(int start, int end) {
 		if (start > end) {
 			throw new ZipCodeException(String
@@ -56,6 +91,12 @@ public class ZipCodeTracker {
 		}
 	}
 
+	/**
+	 * Validates that zipcode is within acceptable boundaries
+	 * 
+	 * @param zipcode
+	 *            - ZipCode to test
+	 */
 	private void validateZipCode(int zipcode) {
 		if (zipcode < MIN_ZIPCODE || zipcode > MAX_ZIPCODE) {
 			throw new ZipCodeException(

@@ -5,17 +5,13 @@ import java.util.Arrays;
 import jerry.balderas.zipcode.ZipCodeTracker;
 import jerry.balderas.zipcode.parser.ZipCodeException;
 
-/*
- * Hello!
- * 
- * Here is my submitted code.  I've studied many of "Uncle Bob"'s lectures, and I'm a fan
- * of code acting as your documentation.  I think the code should speak for itself by using
- * descriptive language for variables and function names.  That being said, if you find this
- * documentation inadequate I'm open to changing my style to better suit the company's needs.       
- */
-
 public class Solution {
 
+	/**
+	 * ZipCodeProject - an application that accepts 5-digit zip code ranges in
+	 * format [<number1>,<number2>] and consolidates all zip code ranges so that
+	 * a simplified string is returned.
+	 */
 	public static void main(String[] args) {
 		try {
 			String zipCodeInput = concatenateToOneString(args);
@@ -26,16 +22,32 @@ public class Solution {
 		}
 	}
 
+	/**
+	 * 
+	 * Concatenates String Array into one string delimited by a " ".
+	 *
+	 * @param args
+	 *            - parameters
+	 * @return String that concatenates all args components.
+	 */
 	private static String concatenateToOneString(String[] args) {
 		if (args == null || args.length == 0) {
 			throw new ZipCodeException(
 					"Usage: java -jar ZipCodeProject.jar [<5-digit zipcode>,<5-digit zipcode>] [<5-digit zipcode>,<5-digit zipcode>] ...");
 		}
-
-		return String.join(" ",Arrays.asList(args));
+		return String.join(" ", Arrays.asList(args));
 	}
-		
 
+	/**
+	 * 
+	 * Takes serialized zipcode range input, registers the zip code ranges, and
+	 * returns simplified serialized string
+	 *
+	 * @param input
+	 *            - serialized Input
+	 * @return Simplified string of all zip code ranges contained in input
+	 *         String.
+	 */
 	public static String consolidateRanges(String input) {
 		ZipCodeTracker tracker = new ZipCodeTracker();
 		tracker.markZipCodes(input);
